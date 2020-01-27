@@ -93,16 +93,22 @@ Ingram$diff<-Ingram$value.y-Ingram$value.x
 Dinwiddie_Ingram<-rbind(Dinwiddie,Ingram)
 
 #Graphique comparaison des 2 joueurs
-ggplot(Dinwiddie_Ingram,aes(x = Dinwiddie_Ingram$variable, y = Dinwiddie_Ingram$diff))+
-  geom_bar(aes(fill = Dinwiddie_Ingram$diff < 0), stat = "identity")+coord_flip()+
-  scale_fill_manual(guide = FALSE, breaks = c(TRUE, FALSE), values=c("green", "gray"))+
-  theme_classic()+ xlab("Stat en relation avec l'équipe")+ylab("Différence 2019-2020")+
-  facet_wrap(~X2)
+ggplot(Dinwiddie_Ingram,aes(x = Dinwiddie_Ingram$variable, y = Dinwiddie_Ingram$diff, fill = X2))+
+  geom_bar(stat="identity", position=position_dodge())+coord_flip()+ 
+  xlab("Stat en relation avec l'équipe")+ylab("Différence 2019-2020")+
+  theme_classic()+ theme(legend.text = element_text(colour="blue", size=10, 
+                                                    face="bold"),legend.position="top")+
+  labs(fill = "Joueur")
 
-# Somme diff
+# Somme et moyenne diff
 
 sum(Dinwiddie_Ingram$diff[Dinwiddie_Ingram$X2=="Spencer Dinwiddie"]) #12.39
 sum(Dinwiddie_Ingram$diff[Dinwiddie_Ingram$X2=="Brandon Ingram"]) #10.61
 
 mean(Dinwiddie_Ingram$diff[Dinwiddie_Ingram$X2=="Spencer Dinwiddie"]) #0.4956364
 mean(Dinwiddie_Ingram$diff[Dinwiddie_Ingram$X2=="Brandon Ingram"]) #0.4244306
+
+
+
+
+  
