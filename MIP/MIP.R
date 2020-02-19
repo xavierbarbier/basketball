@@ -44,7 +44,7 @@ per_min = function(x,y){
 
 
 # liste stats à corriger
-list<-c("X3P","X3PA","nameP","namePA","FT","FTA","ORB","DRB","TRB","AST","STL","BLK","TOV","PF","PTS")
+list<-c("X3P","X3PA","X2P","X2PA","FT","FTA","ORB","DRB","TRB","AST","STL","BLK","TOV","PF","PTS")
 
 # Application fonction à liste variables
 brk20[list]<-per_min(brk20[list],brk20$MP)
