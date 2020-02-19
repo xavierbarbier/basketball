@@ -44,7 +44,7 @@ per_min = function(x,y){
 
 
 # liste stats à corriger
-list<-c("3P","3PA","2P","2PA","FT","FTA","ORB","DRB","TRB","AST","STL","BLK","TOV","PF","PTS")
+list<-c("X3P","X3PA","nameP","namePA","FT","FTA","ORB","DRB","TRB","AST","STL","BLK","TOV","PF","PTS")
 
 # Application fonction à liste variables
 brk20[list]<-per_min(brk20[list],brk20$MP)
@@ -59,17 +59,17 @@ no20[c(3:28)] <- scale(no20[c(3:28)])
 lal19[c(3:28)] <- scale(lal19[c(3:28)])
 
 # Conservation Dinwiddie
-Dinwiddie20<-brk20[brk20$X2=="Spencer Dinwiddie",]
+Dinwiddie20<-brk20[brk20$name=="Spencer Dinwiddie",]
 Dinwiddie20<-Dinwiddie20[2:28]
 
-Dinwiddie19<-brk19[brk19$X2=="Spencer Dinwiddie",]
+Dinwiddie19<-brk19[brk19$name=="Spencer Dinwiddie",]
 Dinwiddie19<-Dinwiddie19[2:28]
 
 # Conservation Ingram
-Ingram20<-no20[no20$X2=="Brandon Ingram",]
+Ingram20<-no20[no20$name=="Brandon Ingram",]
 Ingram20<-Ingram20[2:28]
 
-Ingram19<-lal19[lal19$X2=="Brandon Ingram",]
+Ingram19<-lal19[lal19$name=="Brandon Ingram",]
 Ingram19<-Ingram19[2:28]
 
 
@@ -80,22 +80,22 @@ Ingram20 <- Ingram20[-2]
 Ingram19 <- Ingram19[-2]
 
 # Changement format données
-Dinwiddie20<-melt(Dinwiddie20,  id="X2")
-Dinwiddie19<-melt(Dinwiddie19,  id="X2")
-Ingram20<-melt(Ingram20,  id="X2")
-Ingram19<-melt(Ingram19,  id="X2")
+Dinwiddie20<-melt(Dinwiddie20,  id="name")
+Dinwiddie19<-melt(Dinwiddie19,  id="name")
+Ingram20<-melt(Ingram20,  id="name")
+Ingram19<-melt(Ingram19,  id="name")
 
 #Merge
-Dinwiddie<-merge(Dinwiddie19,Dinwiddie20,by=c("X2","variable"))
+Dinwiddie<-merge(Dinwiddie19,Dinwiddie20,by=c("name","variable"))
 Dinwiddie$diff<-Dinwiddie$value.y-Dinwiddie$value.x
-Ingram<-merge(Ingram19,Ingram20,by=c("X2","variable"))
+Ingram<-merge(Ingram19,Ingram20,by=c("name","variable"))
 Ingram$diff<-Ingram$value.y-Ingram$value.x
 
 #Jointure
 Dinwiddie_Ingram<-rbind(Dinwiddie,Ingram)
 
 #Graphique comparaison des 2 joueurs
-ggplot(Dinwiddie_Ingram,aes(x = Dinwiddie_Ingram$variable, y = Dinwiddie_Ingram$diff, fill = X2))+
+ggplot(Dinwiddie_Ingram,aes(x = Dinwiddie_Ingram$variable, y = Dinwiddie_Ingram$diff, fill = name))+
   geom_bar(stat="identity", position=position_dodge())+coord_flip()+ 
   xlab("Stat en relation avec l'équipe")+ylab("Différence 2019-2020")+
   theme_classic()+ theme(legend.text = element_text(colour="blue", size=30, 
@@ -104,9 +104,9 @@ ggplot(Dinwiddie_Ingram,aes(x = Dinwiddie_Ingram$variable, y = Dinwiddie_Ingram$
 
 # Somme et moyenne diff
 
-sum(Dinwiddie_Ingram$diff[Dinwiddie_Ingram$X2=="Spencer Dinwiddie"]) #12.39
-sum(Dinwiddie_Ingram$diff[Dinwiddie_Ingram$X2=="Brandon Ingram"]) #10.61
+sum(Dinwiddie_Ingram$diff[Dinwiddie_Ingram$name=="Spencer Dinwiddie"]) #12.39
+sum(Dinwiddie_Ingram$diff[Dinwiddie_Ingram$name=="Brandon Ingram"]) #10.61
 
-mean(Dinwiddie_Ingram$diff[Dinwiddie_Ingram$X2=="Spencer Dinwiddie"]) #0.4956364
-mean(Dinwiddie_Ingram$diff[Dinwiddie_Ingram$X2=="Brandon Ingram"]) #0.4244306
+mean(Dinwiddie_Ingram$diff[Dinwiddie_Ingram$name=="Spencer Dinwiddie"]) #0.4956364
+mean(Dinwiddie_Ingram$diff[Dinwiddie_Ingram$name=="Brandon Ingram"]) #0.4244306
 
